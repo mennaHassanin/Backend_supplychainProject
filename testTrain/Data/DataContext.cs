@@ -6,7 +6,6 @@ using Microsoft.EntityFrameworkCore;
 using testTrain.Model;
 using Microsoft.EntityFrameworkCore.SqlServer;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using testTrain.Model.DOTs.Requests;
 
 namespace testTrain.Data
 {

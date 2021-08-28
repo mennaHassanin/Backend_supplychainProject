@@ -10,7 +10,7 @@ namespace testTrain.Model
     [Index(nameof(delieveryMan.nationalID), IsUnique = true)]
     public class delieveryMan : IdentityUser
     {
-        //public string Id { get; set; }
+        public int Id { get; set; }
         public string nationalID { get; set; }
         public string phoneNumber { get; set; }
         public string fullName { get; set; }

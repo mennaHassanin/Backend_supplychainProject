@@ -15,7 +15,6 @@ using System.Security.Claims;
 using System.Text;
 
 using testTrain.Configuration;
-using testTrain.Model.DOTs.Requests;
 using testTrain.Model.DOTs.Response;
 using testTrain.Model;
 

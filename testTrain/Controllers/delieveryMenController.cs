@@ -50,7 +50,7 @@ namespace testTrain.Controllers
         // PUT: api/delieveryMen/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutdelieveryMan(string id, delieveryMan delieveryMan)
+        public async Task<IActionResult> PutdelieveryMan(int id, delieveryMan delieveryMan)
         {
             if (id != delieveryMan.Id)
             {
@@ -106,7 +106,7 @@ namespace testTrain.Controllers
             return NoContent();
         }
 
-        private bool delieveryManExists(string id)
+        private bool delieveryManExists(int id)
         {
             return _context.delieveryDrivers.Any(e => e.Id == id);
         }
