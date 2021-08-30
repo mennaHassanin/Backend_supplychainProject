@@ -19,6 +19,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Identity;
+using AutoMapper;
 
 namespace testTrain
 {
@@ -33,10 +34,23 @@ namespace testTrain
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
+
         {
             services.Configure<JwtConfig>(Configuration.GetSection("JwtConfig"));
-            services.AddDbContext<DataContext>(x => x.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
+            
+            services.AddDbContext<DataContext>(x => x.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            //services.AddAutoMapper(typeof(MappingProfile));
+            //var mapperConfig = new AutoMapper.MapperConfiguration(mc =>
+            //{
+            //    mc.AddProfile(new MappingProfile());
+            ////});
+
+            //IMapper mapper = mapperConfig.CreateMapper();
+            //services.AddSingleton(mapper);
+
+          
+            services.AddAutoMapper(typeof(MappingProfile));
             services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -60,7 +74,7 @@ namespace testTrain
                     };
                 
                 });
-            services.AddIdentityCore<LoginUser>().AddUserManager<UserManager<LoginUser>>().AddEntityFrameworkStores<DataContext>();
+            services.AddIdentityCore<delieveryMan>().AddUserManager<UserManager<delieveryMan>>().AddEntityFrameworkStores<DataContext>();
             // services.AddIdentity<LoginUser, IdentityRole>().AddEntityFrameworkStores<DataContext>().AddDefaultTokenProviders();
              //services.AddDefaultIdentity<LoginUser>().AddRoles<IdentityRole>().AddEntityFrameworkStores<DataContext>();
             // services.AddDefaultIdentity<LoginUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<DataContext>();
@@ -84,6 +98,7 @@ namespace testTrain
             }
 
             app.UseRouting();
+            app.UseStaticFiles();
             app.UseAuthentication();
             app.UseAuthorization();
 

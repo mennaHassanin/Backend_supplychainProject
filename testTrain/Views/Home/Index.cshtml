@@ -1,10 +1,10 @@
-﻿@model IEnumerable<testTrain.Model.delieveryMan>
+﻿@model IEnumerable<testTrain.Model.ViewModels.DisplayDeliveryManVM>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "DisplayDriver";
 }
 
-<h1>Index</h1>
+<h1>DisplayDriver</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -13,16 +13,13 @@
     <thead>
         <tr>
             <th>
+                @Html.DisplayNameFor(model => model.PhoneNumber)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.nationalID)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.phoneNumber)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.fullName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.password)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.carType)
@@ -46,16 +43,13 @@
 @foreach (var item in Model) {
         <tr>
             <td>
+                @Html.DisplayFor(modelItem => item.PhoneNumber)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.nationalID)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.phoneNumber)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.fullName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.password)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.carType)

@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace testTrain.Model
 {
-    public class LoginUser : IdentityUser
+    public class LoginUser
     {
-        public string phoneNumber { get; set; }
+        public string PhoneNumber { get; set; }
 
         public string password { get; set; }
     }

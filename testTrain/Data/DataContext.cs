@@ -6,10 +6,11 @@ using Microsoft.EntityFrameworkCore;
 using testTrain.Model;
 using Microsoft.EntityFrameworkCore.SqlServer;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using testTrain.Model.ViewModels;
 
 namespace testTrain.Data
 {
-    public class DataContext : IdentityDbContext<LoginUser>
+    public class DataContext : IdentityDbContext<delieveryMan>
     {
         public DataContext()
         {
@@ -20,6 +21,8 @@ namespace testTrain.Data
 
         }
 
-        public DbSet<delieveryMan> delieveryDrivers { get; set; }
+       
+
+   
     }
 }
