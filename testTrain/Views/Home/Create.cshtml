@@ -4,19 +4,25 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
+<h1>Dashboard</h1>
 
-<h4>CreateDeliveryManVM</h4>
+<h4>Register Delivery Man</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Id" class="control-label"></label>
-                <input asp-for="Id" class="form-control" />
-                <span asp-validation-for="Id" class="text-danger"></span>
+                <label asp-for="fullName" class="control-label"></label>
+                <input asp-for="fullName" class="form-control" />
+                <span asp-validation-for="fullName" class="text-danger"></span>
             </div>
+            <div class="form-group">
+                <label asp-for="nationalID" class="control-label"></label>
+                <input asp-for="nationalID" class="form-control" />
+                <span asp-validation-for="nationalID" class="text-danger"></span>
+            </div>
+
             <div class="form-group">
                 <label asp-for="PhoneNumber" class="control-label"></label>
                 <input asp-for="PhoneNumber" class="form-control" />
@@ -24,23 +30,14 @@
             </div>
             <div class="form-group">
                 <label asp-for="Password" class="control-label"></label>
-                <input asp-for="Password" class="form-control" />
+                <input type="password" asp-for="Password" class="form-control" />
                 <span asp-validation-for="Password" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="nationalID" class="control-label"></label>
-                <input asp-for="nationalID" class="form-control" />
-                <span asp-validation-for="nationalID" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="fullName" class="control-label"></label>
-                <input asp-for="fullName" class="form-control" />
-                <span asp-validation-for="fullName" class="text-danger"></span>
-            </div>
+
             <div class="form-group">
                 <label asp-for="carType" class="control-label"></label>
-                <input asp-for="carType" class="form-control" />
-                <span asp-validation-for="carType" class="text-danger"></span>
+                @Html.DropDownListFor(m => m.carType, new SelectList(Enum.GetValues(typeof(testTrain.Model.ViewModels.TypeOfCar))), "Select Vehicle")
+
             </div>
             <div class="form-group">
                 <label asp-for="plateNumbers" class="control-label"></label>
@@ -63,7 +60,7 @@
                 <span asp-validation-for="capacity" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Create" class="btn btn-primary" onclick="return confirm('Please wait while Delivery Man is being registered');" />
             </div>
         </form>
     </div>

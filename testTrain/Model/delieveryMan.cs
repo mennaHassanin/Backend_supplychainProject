@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 
 namespace testTrain.Model
 {
-    [Index(nameof(delieveryMan.nationalID), IsUnique = true)]
-    public class delieveryMan : IdentityUser
+    [Index(nameof(DelieveryMan.nationalID), IsUnique = true)]
+    public class DelieveryMan : IdentityUser
     {
         [Required(ErrorMessage = "Please enter your National ID")]
         [Display(Name = "National ID")]
@@ -34,6 +34,6 @@ namespace testTrain.Model
         [Display(Name = "Capacity")]
         public float capacity { get; set; }
 
-
+      
     }
 }

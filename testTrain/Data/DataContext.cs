@@ -10,7 +10,7 @@ using testTrain.Model.ViewModels;
 
 namespace testTrain.Data
 {
-    public class DataContext : IdentityDbContext<delieveryMan>
+    public class DataContext : IdentityDbContext<DelieveryMan>
     {
         public DataContext()
         {
@@ -20,6 +20,8 @@ namespace testTrain.Data
         {
 
         }
+
+        public DbSet<testTrain.Model.ViewModels.CreateDeliveryManVM> CreateDeliveryManVM { get; set; }
 
        
 

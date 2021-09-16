@@ -25,84 +25,85 @@ namespace testTrain.Controllers
     public class AuthenticationManagment : ControllerBase
     {
 
-        private readonly UserManager<delieveryMan> _userManager;
-       // private readonly SignInManager<LoginUser> signInManager;
+        private readonly UserManager<DelieveryMan> _userManager;
+      
         private readonly JwtConfig jwtConfig;
-        public AuthenticationManagment(UserManager<delieveryMan> userManager,IOptionsMonitor<JwtConfig> optionMonitor)
+        public AuthenticationManagment(UserManager<DelieveryMan> userManager,IOptionsMonitor<JwtConfig> optionMonitor)
         {
             this._userManager = userManager;
+
             jwtConfig = optionMonitor.CurrentValue;
 
         }
-        [HttpPost]
-        [Route("Register")]
-        public async Task<IActionResult> Register(delieveryMan user)
-        {
-            if (ModelState.IsValid)
-            {
-                var existingUser = await _userManager.FindByIdAsync(user.PhoneNumber);
-                if (existingUser != null)
-                {
-                    return BadRequest(new LoginResponse()
-                    {
-                        Errors = new List<string>()
-                        {
-                             "NationalID already in use"
-                        },
-                        Success = false
+        //[HttpPost]
+        //[Route("Register")]
+        //public async Task<IActionResult> Register(delieveryMan user)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        var existingUser = await _userManager.FindByIdAsync(user.PhoneNumber);
+        //        if (existingUser != null)
+        //        {
+        //            return BadRequest(new LoginResponse()
+        //            {
+        //                Errors = new List<string>()
+        //                {
+        //                     "NationalID already in use"
+        //                },
+        //                Success = false
 
-                    });
-                }
+        //            });
+        //        }
 
-                var newUser = new delieveryMan() {  PhoneNumber = user.PhoneNumber };
-                var isCreated = await _userManager.CreateAsync(newUser, user.);
-                if (isCreated.Succeeded)
-                {
-                    var jwtToken = GenerateJwtToken(newUser);
-                    return Ok(new LoginResponse()
-                    {
-                        Success = true,
-                        Token = jwtToken
+        //        var newUser = new delieveryMan() {  PhoneNumber = user.PhoneNumber };
+        //        var isCreated = await _userManager.CreateAsync(newUser, user.PasswordHash);
+        //        if (isCreated.Succeeded)
+        //        {
+        //            var jwtToken = GenerateJwtToken(newUser);
+        //            return Ok(new LoginResponse()
+        //            {
+        //                Success = true,
+        //                Token = jwtToken
 
-                    });
+        //            });
 
-                }
-                else
-                {
-                    return BadRequest(new LoginResponse()
-                    {
-                        Errors = new List<string>()
-                        {
-                             "Invalid "
-                        },
-                        Success = false
+        //        }
+        //        else
+        //        {
+        //            return BadRequest(new LoginResponse()
+        //            {
+        //                Errors = new List<string>()
+        //                {
+        //                     "Invalid "
+        //                },
+        //                Success = false
 
-                    });
-                }
+        //            });
+        //        }
 
-            }
-            return BadRequest(new LoginResponse()
-            {
-                Errors = new List<string>()
-                        {
-                             "Invalid "
-                        },
-                Success = false
+        //    }
+        //    return BadRequest(new LoginResponse()
+        //    {
+        //        Errors = new List<string>()
+        //                {
+        //                     "Invalid "
+        //                },
+        //        Success = false
 
-            });
+        //    });
 
 
-        }
+        //}
         [HttpPost]
         [Route("Login")]
-
-        public async Task<IActionResult> Login(delieveryMan user)
+       
+        public async Task<IActionResult> Login(LoginUser user)
         {
             if (ModelState.IsValid)
             {
-               
 
-                var existingUser = await _userManager.FindByIdAsync(user.PhoneNumber);
+
+                var existingUser = await _userManager.FindByNameAsync(user.PhoneNumber);
                 if (existingUser == null)
                 {
 
@@ -116,7 +117,7 @@ namespace testTrain.Controllers
 
                     });
                 }
-                var isCorrect = await _userManager.CheckPasswordAsync(existingUser, user.PasswordHash);
+                var isCorrect = await _userManager.CheckPasswordAsync(existingUser, user.password);
                 if (!isCorrect)
                 {
                     return BadRequest(new LoginResponse()
@@ -148,14 +149,14 @@ namespace testTrain.Controllers
             });
         }
 
-        private string GenerateJwtToken([FromBody]delieveryMan user)
+        private string GenerateJwtToken(DelieveryMan user)
         {
             var jwtTokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(jwtConfig.Secret);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new[] {
-                //new Claim("Id",user.Id),
+                new Claim("Id",user.Id),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
 
                 }),

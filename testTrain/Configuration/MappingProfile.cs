@@ -10,10 +10,13 @@ namespace testTrain.Configuration
     public class MappingProfile : Profile
     {
 
-        public MappingProfile(){
-            
-            CreateMap<delieveryMan,DisplayDeliveryManVM>();
-           
+
+        public MappingProfile()
+        {
+
+            CreateMap<DelieveryMan, DisplayDeliveryManVM>();
+            CreateMap<CreateDeliveryManVM, DelieveryMan>();
+
         }
     }
 }

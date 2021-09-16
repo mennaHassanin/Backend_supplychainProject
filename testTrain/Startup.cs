@@ -40,14 +40,7 @@ namespace testTrain
 
             
             services.AddDbContext<DataContext>(x => x.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            //services.AddAutoMapper(typeof(MappingProfile));
-            //var mapperConfig = new AutoMapper.MapperConfiguration(mc =>
-            //{
-            //    mc.AddProfile(new MappingProfile());
-            ////});
-
-            //IMapper mapper = mapperConfig.CreateMapper();
-            //services.AddSingleton(mapper);
+          
 
           
             services.AddAutoMapper(typeof(MappingProfile));
@@ -74,12 +67,8 @@ namespace testTrain
                     };
                 
                 });
-            services.AddIdentityCore<delieveryMan>().AddUserManager<UserManager<delieveryMan>>().AddEntityFrameworkStores<DataContext>();
-            // services.AddIdentity<LoginUser, IdentityRole>().AddEntityFrameworkStores<DataContext>().AddDefaultTokenProviders();
-             //services.AddDefaultIdentity<LoginUser>().AddRoles<IdentityRole>().AddEntityFrameworkStores<DataContext>();
-            // services.AddDefaultIdentity<LoginUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<DataContext>();
-            //services.AddIdentityCore<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<DataContext>();
-            services.AddControllers();
+            services.AddIdentityCore<DelieveryMan>().AddUserManager<UserManager<DelieveryMan>>().AddEntityFrameworkStores<DataContext>();
+           services.AddControllers();
             services.AddMvc();
             services.AddSwaggerGen(c =>
             {
@@ -93,9 +82,14 @@ namespace testTrain
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "testTrain v1"));
+              
             }
+            app.UseDeveloperExceptionPage();
+            app.UseSwagger();
+                app.UseSwaggerUI(c => {
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "testTrain v1");
+                    c.RoutePrefix = "";
+                    });
 
             app.UseRouting();
             app.UseStaticFiles();

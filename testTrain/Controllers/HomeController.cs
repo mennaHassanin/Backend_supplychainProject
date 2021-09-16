@@ -11,6 +11,10 @@ using testTrain.Data;
 using testTrain.Model;
 using testTrain.Model.ViewModels;
 using testTrain.Configuration;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Data.SqlClient;
+
 namespace testTrain.Controllers
 {
     [Route("[controller]")]
@@ -20,11 +24,12 @@ namespace testTrain.Controllers
     {
         private readonly DataContext _ctx;
         private readonly IMapper _mapper;
-        public HomeController(DataContext ctx, IMapper mapper)
+        private readonly UserManager<DelieveryMan> _userManager;
+        public HomeController(DataContext ctx, IMapper mapper , UserManager<DelieveryMan> userManager)
         {
             this._ctx = ctx;
             this._mapper = mapper;
-
+            this._userManager = userManager;
         }
       
         // GET: HomeController
@@ -32,7 +37,8 @@ namespace testTrain.Controllers
         public ActionResult Index()
         {
             var Users = _ctx.Users.ToList();
-            var ShowDeliveryManData = _mapper.Map<List<delieveryMan>,List<DisplayDeliveryManVM>>(Users);
+            var ShowDeliveryManData = _mapper.Map<List<DelieveryMan>,List<DisplayDeliveryManVM>>(Users);
+
             return View(ShowDeliveryManData);
         }
 
@@ -46,26 +52,26 @@ namespace testTrain.Controllers
 
         [HttpPost]
         [ApiExplorerSettings(IgnoreApi = true)]
-        [Route("createDeliveryMan")]
+        [Route("CreateDeliveryMan")]
         [ValidateAntiForgeryToken]
         [AllowAnonymous]
-        public IActionResult createDeliveryMan( delieveryMan man)
-        {  using (var client = new System.Net.Http.HttpClient())
-            {
-                var postTask = client.PostAsJsonAsync<delieveryMan>("http://localhost:26767/api/delieveryMen", man);
-                postTask.Wait();
+        public async Task<IActionResult> CreateDeliveryMan(CreateDeliveryManVM DeliveryManVM)
+        {
 
-                var result = postTask.Result;
-                if (result.IsSuccessStatusCode)
-                {
-                    return RedirectToAction("Index");
-                }
+            var DeliveryMan = _mapper.Map<DelieveryMan>(DeliveryManVM);
+            DeliveryMan.UserName = DeliveryMan.PhoneNumber;
+            DeliveryMan.Id = Guid.NewGuid().ToString();
+            var IsCreated = await _userManager.CreateAsync(DeliveryMan, DeliveryManVM.Password);
+            if (IsCreated.Succeeded)
+            {
+
+                return RedirectToAction("Index");
+
             }
 
             return View();
         }
 
-        // POST: HomeController/Create
 
 
 
